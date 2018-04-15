@@ -71,7 +71,6 @@ class App extends React.Component {
         <Controls
           submit={this.submitNewConfession}
         />
-        {/* <Footer /> */}
       </div>
     );
   }
