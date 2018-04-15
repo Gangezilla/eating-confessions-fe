@@ -1,13 +1,15 @@
 import React from 'react';
 import ResultsList from './ResultsList';
 import Controls from './Controls';
+import Header from './Header';
 
 class App extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {
-      results: dummyResults,
+      // results: dummyResults,
+      results: [],
       pageNumber: 1,
     };
 
@@ -21,12 +23,13 @@ class App extends React.Component {
 
   async getMoreResults() {
     const results = await fetch(`api/confession/?page=${this.state.pageNumber}`);
-    // const resultsJson = await results.json();
-    // console.log(resultsJson);
-    // this.setState(prevState => ({
-    //   results: [...prevState.results, resultsJson],
-    //   pageNumber: prevState.pageNumber + 1,
-    // }));
+    const resultsJson = await results.json();
+    if (resultsJson.results) {
+      this.setState(prevState => ({
+        results: [...prevState.results, ...resultsJson],
+        pageNumber: prevState.pageNumber + 1,
+      }));
+    }
   }
 
   async submitNewConfession({
@@ -60,11 +63,13 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        {/* <Header /> */}
-        <ResultsList results={this.state.results} />
+        <Header />
+        <ResultsList
+          results={this.state.results}
+          getMoreResults={this.getMoreResults}
+        />
         <Controls
           submit={this.submitNewConfession}
-          getMoreResults={this.getMoreResults}
         />
         {/* <Footer /> */}
       </div>
@@ -72,32 +77,56 @@ class App extends React.Component {
   }
 }
 
-const dummyResults = [
-  {
-    id: 1,
-    title: 'Confession1',
-    content: 'Boy oh boy',
-    timePosted: '0001-01-01T00:00:00',
-  },
-  {
-    id: 1234,
-    title: 'This is a title',
-    content: 'This is some cool content',
-    timePosted: '0001-01-01T00:00:00',
-  },
-  {
-    id: 12345,
-    title: 'This is a title',
-    content: 'This is some cool content',
-    timePosted: '0001-01-01T00:00:00',
-  },
-  {
-    id: 123475,
-    title: 'This is a title',
-    content: 'This is some cool content',
-    timePosted: '0001-01-01T00:00:00',
-  },
-];
+// const dummyResults = [
+//   {
+//     id: 1,
+//     title: 'Confession1',
+//     content: 'Boy oh boy',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 1234,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 12345,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 123475,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 1,
+//     title: 'Confession1',
+//     content: 'Boy oh boy',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 1234,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 12345,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+//   {
+//     id: 123475,
+//     title: 'This is a title',
+//     content: 'This is some cool content',
+//     timePosted: '0001-01-01T00:00:00',
+//   },
+// ];
 
 
 export default App;

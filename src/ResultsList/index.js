@@ -8,7 +8,8 @@ const ConfessionContainer = styled('div')`
   justify-content: center;
   flex-flow: column;
   max-width: 560px;
-  margin: 0 auto;
+  margin: 0 auto 200px;
+  padding: 0 20px;
 `;
 
 const Confession = styled('div')`
@@ -21,7 +22,6 @@ const Confession = styled('div')`
 const DateString = styled('span')`
   color: #FF294C;
   font-family: 'Cabin', sans-serif;
-  text-transform: uppercase;
 `;
 
 const Title = styled('p')`
@@ -34,9 +34,19 @@ const Content = styled('p')`
   margin: 0;
 `;
 
+const LoadMore = styled('button')`
+  border-radius: 0;
+  align-self: flex-end;
+  height: 40px;
+  width: 150px;
+  margin-top: 10px;
+  border-color: #666;
+  color: #ff294c;
+  font-size: 20px;
+`;
+
 const ResultsList = (props) => {
-  // console.log(results);
-  const { results } = props;
+  const { results, getMoreResults } = props;
   return (
     <ConfessionContainer>
       {results.map(result => (
@@ -46,6 +56,11 @@ const ResultsList = (props) => {
           <Content>{result.content}</Content>
         </Confession>
       ))}
+      <LoadMore
+        onClick={getMoreResults}
+      >
+          More
+      </LoadMore>
     </ConfessionContainer>
   );
 };
